@@ -52,3 +52,34 @@ async def call_sales_agent(
     )
     tool_context.state["sales_agent_output"] = sales_agent_output
     return sales_agent_output
+
+
+
+
+
+
+
+
+
+
+
+# Add this to your imports at the top:
+from .sub_agents.slack_report.agent import reporting_agent
+
+# ... existing code ...
+
+async def call_reporting_agent(
+    message: str,
+    tool_context: ToolContext,
+):
+    """Tool to format and send a report via Slack."""
+    logger.debug("call_reporting_agent triggered.")
+    agent_tool = AgentTool(agent=reporting_agent)
+    
+    # We pass the message we want sent as the "request" to the sub-agent
+    reporting_agent_output = await agent_tool.run_async(
+        args={"request": f"Format this data and send it to Slack: {message}"}, 
+        tool_context=tool_context
+    )
+    tool_context.state["reporting_agent_output"] = reporting_agent_output
+    return reporting_agent_output

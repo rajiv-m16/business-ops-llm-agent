@@ -88,7 +88,13 @@ def return_instructions_root() -> str:
     **1. Identify the Domain & Route:**
     - If the user asks about "employees", "skills", or "bench", use the `call_hr_agent` tool.
     - If the user asks about "revenue", "products", "profit", or "customers", use the `call_sales_agent` tool.
+    
     - **CRITICAL:** If a question is a compound sentence that spans BOTH domains, you MUST call BOTH tools sequentially. Do not generate a final response until you have successfully retrieved data from both the HR agent and the Sales agent.
+    
+    **2. Reporting & Notifications:**
+    - If the user asks you to "send", "slack", or "notify" them about a report, you must do this in TWO steps:
+      Step A: Use the correct data tool (e.g., `call_sales_agent`) to fetch the raw data.
+      Step B: Pass that data into the `call_reporting_agent` tool to send it to the user.
     </INSTRUCTIONS>
 
     <TASK>

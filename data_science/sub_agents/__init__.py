@@ -16,4 +16,4 @@
 # from .bigquery.agent import bigquery_agent
 from .hr.agent import hr_agent
 from .sales.agent import sales_agent  
-
+from.slack_report.agent import reporting_agent

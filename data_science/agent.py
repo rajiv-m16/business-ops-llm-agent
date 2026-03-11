@@ -274,9 +274,8 @@ from .prompts import return_instructions_root
 # Import the specific setting functions and tools for HR and Sales
 from .sub_agents.hr.tools import get_database_settings as get_hr_database_settings
 from .sub_agents.sales.tools import get_database_settings as get_sales_database_settings
-from .tools import call_hr_agent, call_sales_agent
+from .tools import call_hr_agent, call_sales_agent,call_reporting_agent
 
-# ... [Keep your existing OpenTelemetry/WandB setup code here] ...
 
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
@@ -367,7 +366,7 @@ def get_root_agent() -> LlmAgent:
         model=os.getenv("ROOT_AGENT_MODEL", "gemini-2.5-pro"),
         name="data_science_root_agent",
         instruction=return_instructions_root() + get_dataset_definitions_for_instructions(),
-        tools=tools, 
+        tools=tools+ [call_reporting_agent], 
         before_agent_callback=load_database_settings_in_context,
         generate_content_config=types.GenerateContentConfig(temperature=0.01),
     )
@@ -376,3 +375,8 @@ def get_root_agent() -> LlmAgent:
 _dataset_config = load_dataset_config()
 _database_settings = init_database_settings(_dataset_config)
 root_agent = get_root_agent()
+
+
+
+
+
