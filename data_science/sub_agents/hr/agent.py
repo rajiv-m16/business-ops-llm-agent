@@ -25,28 +25,18 @@ from google.adk.tools.bigquery import BigQueryToolset
 from google.adk.tools.bigquery.config import BigQueryToolConfig, WriteMode
 from google.genai import types
 
-from ...utils.utils import USER_AGENT
+from data_science.utils.utils import USER_AGENT
 from . import tools
-from .chase_sql import chase_db_tools
-from .prompts import return_instructions_bigquery
+from .prompts import return_instructions_hr
 
 logger = logging.getLogger(__name__)
 
-NL2SQL_METHOD = os.getenv("NL2SQL_METHOD", "BASELINE")
-
-# BigQuery built-in tools in ADK
-# https://google.github.io/adk-docs/tools/built-in-tools/#bigquery
 ADK_BUILTIN_BQ_EXECUTE_SQL_TOOL = "execute_sql"
-
 
 def setup_before_agent_call(callback_context: CallbackContext) -> None:
     """Setup the agent."""
-
-    if "database_settings" not in callback_context.state:
-        callback_context.state["database_settings"] = (
-            tools.get_database_settings()
-        )
-
+    if "hr_database_settings" not in callback_context.state:
+        callback_context.state["hr_database_settings"] = tools.get_database_settings()
 
 def store_results_in_context(
     tool: BaseTool,
@@ -54,14 +44,10 @@ def store_results_in_context(
     tool_context: ToolContext,
     tool_response: dict,
 ) -> dict | None:
-    # We are setting a state for the data science agent to be able to use the
-    # sql query results as context
     if tool.name == ADK_BUILTIN_BQ_EXECUTE_SQL_TOOL:
         if tool_response["status"] == "SUCCESS":
             tool_context.state["bigquery_query_result"] = tool_response["rows"]
-
     return None
-
 
 bigquery_tool_filter = [ADK_BUILTIN_BQ_EXECUTE_SQL_TOOL]
 bigquery_tool_config = BigQueryToolConfig(
@@ -71,18 +57,12 @@ bigquery_toolset = BigQueryToolset(
     tool_filter=bigquery_tool_filter, bigquery_tool_config=bigquery_tool_config
 )
 
-bigquery_agent = LlmAgent(
-    model=os.getenv("BIGQUERY_AGENT_MODEL", ""),
-    name="bigquery_agent",
-    instruction=return_instructions_bigquery(),
-    tools=[
-        (
-            chase_db_tools.initial_bq_nl2sql
-            if NL2SQL_METHOD == "CHASE"
-            else tools.bigquery_nl2sql
-        ),
-        bigquery_toolset,
-    ],
+# Initialize the HR Agent
+hr_agent = LlmAgent(
+    model=os.getenv("BIGQUERY_AGENT_MODEL", "gemini-2.5-pro"), # Added model fallback
+    name="hr_agent",
+    instruction=return_instructions_hr(),
+    tools=[tools.hr_nl2sql, bigquery_toolset], # Fixed the undefined tool reference
     before_agent_callback=setup_before_agent_call,
     after_tool_callback=store_results_in_context,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),

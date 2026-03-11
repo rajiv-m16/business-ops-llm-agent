@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .alloydb.agent import alloydb_agent
 # from .analytics.agent import analytics_agent
-from .bigquery.agent import bigquery_agent
-from .bqml.agent import root_agent as bqml_agent
+# from .bigquery.agent import bigquery_agent
+from .hr.agent import hr_agent
+from .sales.agent import sales_agent  
+
