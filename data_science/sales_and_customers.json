@@ -1,0 +1,44 @@
+{
+  "datasets": [
+    {
+      "type": "bigquery",
+      "name": "sales_and_customers",
+      "description": "Primary sales database containing customer demographics, product catalog, sales transactions, and profit margin analysis."
+    }
+  ],
+  "cross_dataset_relations": [
+    {
+      "description": "Links sales transactions to customer details",
+      "join_keys": [
+        {
+          "left_table": "sales",
+          "left_column": "customer_id",
+          "right_table": "customers",
+          "right_column": "customer_id"
+        }
+      ]
+    },
+    {
+      "description": "Links sales transactions to product details",
+      "join_keys": [
+        {
+          "left_table": "sales",
+          "left_column": "product_id",
+          "right_table": "products",
+          "right_column": "product_id"
+        }
+      ]
+    },
+    {
+      "description": "Links profit margin analysis to specific sales transactions",
+      "join_keys": [
+        {
+          "left_table": "profit_margins",
+          "left_column": "sale_id",
+          "right_table": "sales",
+          "right_column": "sale_id"
+        }
+      ]
+    }
+  ]
+}
