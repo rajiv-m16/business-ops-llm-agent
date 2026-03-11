@@ -60,7 +60,7 @@ bigquery_toolset = BigQueryToolset(
 
 # Initialize the Sales Agent
 sales_agent = LlmAgent(
-    model=os.getenv("BIGQUERY_AGENT_MODEL", "gemini-2.5-pro"),
+    model=os.getenv("BIGQUERY_AGENT_MODEL", "gemini-2.5-flash"),
     name="sales_agent",
     instruction=return_instructions_sales(),
     tools=[tools.sales_nl2sql, bigquery_toolset], # Use bigquery_toolset instead of undefined tool

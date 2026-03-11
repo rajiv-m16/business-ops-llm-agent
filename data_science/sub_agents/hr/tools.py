@@ -173,7 +173,7 @@ best practices outlined above to generate the correct BigQuery SQL. Only output 
 
     try:
         response = llm_client.models.generate_content(
-            model=os.getenv("BASELINE_NL2SQL_MODEL", "gemini-2.5-pro"),
+            model=os.getenv("BASELINE_NL2SQL_MODEL", "gemini-2.5-flash"),
             contents=prompt,
             config={"temperature": 0.1},
         )

@@ -59,7 +59,7 @@ bigquery_toolset = BigQueryToolset(
 
 # Initialize the HR Agent
 hr_agent = LlmAgent(
-    model=os.getenv("BIGQUERY_AGENT_MODEL", "gemini-2.5-pro"), # Added model fallback
+    model=os.getenv("BIGQUERY_AGENT_MODEL", "gemini-2.5-flash"), # Added model fallback
     name="hr_agent",
     instruction=return_instructions_hr(),
     tools=[tools.hr_nl2sql, bigquery_toolset], # Fixed the undefined tool reference
