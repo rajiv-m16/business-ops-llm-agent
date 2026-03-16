@@ -32,7 +32,7 @@ flags.DEFINE_string("project_id", None, "GCP project ID.")
 flags.DEFINE_string("location", None, "GCP location.")
 flags.DEFINE_string(
     "bucket", None, "GCP bucket name (without gs:// prefix)."
-)  # Changed flag description
+)  
 flags.DEFINE_string("resource_id", None, "ReasoningEngine resource ID.")
 
 flags.DEFINE_bool("create", False, "Create a new agent.")
@@ -65,7 +65,7 @@ def setup_staging_bucket(
     """
     storage_client = storage.Client(project=project_id)
     try:
-        # Check if the bucket exists
+        
         bucket = storage_client.lookup_bucket(bucket_name)
         if bucket:
             logger.info("Staging bucket gs://%s already exists.", bucket_name)
@@ -73,7 +73,7 @@ def setup_staging_bucket(
             logger.info(
                 "Staging bucket gs://%s not found. Creating...", bucket_name
             )
-            # Create the bucket if it doesn't exist
+            
             new_bucket = storage_client.create_bucket(
                 bucket_name, project=project_id, location=location
             )
@@ -82,7 +82,7 @@ def setup_staging_bucket(
                 new_bucket.name,
                 location,
             )
-            # Enable uniform bucket-level access for simplicity
+            
             new_bucket.iam_configuration.uniform_bucket_level_access_enabled = (
                 True
             )
@@ -111,7 +111,7 @@ def setup_staging_bucket(
             bucket_name,
             e,
         )
-        # Assuming we can proceed if it exists, even with a conflict warning
+        
     except google_exceptions.ClientError as e:
         logger.error(
             "Failed to create or access bucket gs://%s. Error: %s",
@@ -132,7 +132,7 @@ def create(env_vars: dict[str, str]) -> None:
 
     if not os.path.exists(AGENT_WHL_FILE):
         logger.error("Agent wheel file not found at: %s", AGENT_WHL_FILE)
-        # Consider adding instructions here on how to build the wheel file
+        
         raise FileNotFoundError(f"Agent wheel file not found: {AGENT_WHL_FILE}")
 
     logger.info("Using agent wheel file: %s", AGENT_WHL_FILE)
@@ -165,7 +165,7 @@ def delete(resource_id: str) -> None:
         print(f"\nError deleting agent {resource_id}: {e}")
 
 
-def main(argv: list[str]) -> None:  # pylint: disable=unused-argument
+def main(argv: list[str]) -> None:  
     """Main execution function."""
     load_dotenv()
     env_vars = {}

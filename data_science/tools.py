@@ -35,11 +35,6 @@ logger = logging.getLogger(__name__)
 
 
 
-
-
-
-
-
 async def call_hr_agent(
     question: str,
     tool_context: ToolContext,
@@ -52,12 +47,6 @@ async def call_hr_agent(
     )
     tool_context.state["hr_agent_output"] = hr_agent_output
     return hr_agent_output
-
-
-
-
-
-
 
 
 

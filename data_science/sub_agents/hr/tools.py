@@ -76,7 +76,7 @@ def get_filtered_schema(target_dataset_id: str, question: str = ""):
             df_schema['description'].str.contains(pattern, case=False, na=False)
         ]
         
-        # Fallback to a few rows if filtering was too aggressive
+        
         df_schema = relevant_df if not relevant_df.empty else df_schema.head(20)
 
     tables_context = {}

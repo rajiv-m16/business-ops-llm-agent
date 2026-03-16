@@ -34,10 +34,6 @@ logger = logging.getLogger(__name__)
 
 ADK_BUILTIN_BQ_EXECUTE_SQL_TOOL = "execute_sql"
 
-# def setup_before_agent_call(callback_context: CallbackContext) -> None:
-#     """Setup the agent."""
-#     if "sales_database_settings" not in callback_context.state:
-#         callback_context.state["sales_database_settings"] = tools.get_database_settings()
 
 def store_results_in_context(
     tool: BaseTool,
@@ -64,7 +60,6 @@ sales_agent = LlmAgent(
     name="sales_agent",
     instruction=return_instructions_sales(),
     tools=[tools.sales_nl2sql, bigquery_toolset], 
-    # before_agent_callback=setup_before_agent_call,
     after_tool_callback=store_results_in_context,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
 )

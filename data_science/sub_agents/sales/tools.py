@@ -95,7 +95,7 @@ def sales_nl2sql(question: str, tool_context: ToolContext) -> str:
     
     sales_dataset_id = "sales_and_customers" 
     
-    # DYNAMIC FETCH: Pull schema specifically tailored to this question
+    
     dynamic_schema = get_filtered_schema(sales_dataset_id, question)
 
     prompt_template = """

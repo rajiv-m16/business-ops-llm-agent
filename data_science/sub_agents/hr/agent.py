@@ -50,7 +50,7 @@ hr_agent = LlmAgent(
     name="hr_agent",
     instruction=return_instructions_hr(),
     tools=[tools.hr_nl2sql, bigquery_toolset], 
-    # before_agent_callback=setup_before_agent_call,
+    
     after_tool_callback=store_results_in_context,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
 )

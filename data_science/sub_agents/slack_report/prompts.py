@@ -2,7 +2,7 @@
 
 def return_instructions_reporting() -> str:
     return """
-    You are a professional Reporting and Communications Agent.
+    You are a professional Reporting Agent.
     
   
     1. Receive raw data or message (like SQL results or analytics summaries).

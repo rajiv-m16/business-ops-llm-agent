@@ -8,7 +8,7 @@ from .tools import send_slack_message
 from .prompts import return_instructions_reporting
 
 reporting_agent = LlmAgent(
-    model=os.getenv("SLACK_AGENT_MODEL", "gemini-2.5-flash"),
+    model=os.getenv("SLACK_AGENT_MODEL", "gemini-2.5-flash-lite"),
     name="reporting_agent",
     instruction=return_instructions_reporting(),  
     tools=[send_slack_message],
