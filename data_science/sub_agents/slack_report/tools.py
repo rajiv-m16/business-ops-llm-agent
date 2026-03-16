@@ -1,5 +1,3 @@
-"""Tools for the Reporting Agent."""
-
 import os
 import requests
 import logging
@@ -16,14 +14,22 @@ def send_slack_message(
     
     webhook_url = os.getenv("SLACK_WEBHOOK_URL")
     if not webhook_url:
+        logger.error("SLACK_WEBHOOK_URL is missing from environment.")
         return "ERROR: SLACK_WEBHOOK_URL environment variable is not set."
     
-    # Slack expects a JSON payload with a "text" key
+    if not message or message.strip() == "":
+        return "ERROR: No message provided."
+
+    
+    if len(message) > 3500:
+        message = message[:3500] + "\n\n... (Report truncated due to length)"
+
     payload = {"text": message}
     
     try:
-        response = requests.post(webhook_url, json=payload)
+        response = requests.post(webhook_url, json=payload, timeout=10)
         if response.status_code == 200:
+            logger.info("Message successfully sent to Slack.")
             return "SUCCESS: Message sent to Slack."
         else:
             return f"FAILED: Slack API returned status {response.status_code}, {response.text}"

@@ -2,13 +2,13 @@
   "datasets": [
     {
       "type": "bigquery",
-      "name": "dw_bench_gold_ds",
-      "description": "Bristlecone bench data. Use this for analyzing resource availability, employee bench status, and skills."
+      "name": "people_analytics",
+      "description": "HR and Employee Data. Route queries here for headcount, compensation, departments, and skills. Tables: 'employees' (contains employee_id, first_name, last_name, gender, email, hire_date, salary, and skill_set array) and 'departments' (contains department_id, department_name, location)."
     },
     {
       "type": "bigquery",
       "name": "sales_and_customers",
-      "description": "Primary sales database. Use this for customer demographics, product catalog, sales transactions, and profit margin analysis."
+      "description": "Primary sales and revenue database. Route queries here for customer demographics, product catalogs, sales transactions, and profit margins. Tables include 'sales', 'customers', 'products', and 'profit_margins'."
     }
   ],
   "cross_dataset_relations": [

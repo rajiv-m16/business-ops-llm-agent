@@ -20,11 +20,25 @@ import logging
 from google.adk.tools import ToolContext
 from google.adk.tools.agent_tool import AgentTool
 
-# Import your newly created sub-agents
+
 from .sub_agents.hr.agent import hr_agent
+
 from .sub_agents.sales.agent import sales_agent
 
+from .sub_agents.slack_report.agent import reporting_agent
+
 logger = logging.getLogger(__name__)
+
+
+
+
+
+
+
+
+
+
+
 
 async def call_hr_agent(
     question: str,
@@ -38,6 +52,15 @@ async def call_hr_agent(
     )
     tool_context.state["hr_agent_output"] = hr_agent_output
     return hr_agent_output
+
+
+
+
+
+
+
+
+
 
 
 async def call_sales_agent(
@@ -60,23 +83,15 @@ async def call_sales_agent(
 
 
 
-
-
-
-# Add this to your imports at the top:
-from .sub_agents.slack_report.agent import reporting_agent
-
-# ... existing code ...
-
 async def call_reporting_agent(
     message: str,
     tool_context: ToolContext,
 ):
-    """Tool to format and send a report via Slack."""
+    """Tool to format and send a report on Slack."""
     logger.debug("call_reporting_agent triggered.")
     agent_tool = AgentTool(agent=reporting_agent)
     
-    # We pass the message we want sent as the "request" to the sub-agent
+    
     reporting_agent_output = await agent_tool.run_async(
         args={"request": f"Format this data and send it to Slack: {message}"}, 
         tool_context=tool_context

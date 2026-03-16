@@ -37,4 +37,5 @@ __pycache__/
 .env
 .env.*
 *.env
-
+custom-agent-output.md
+custom-agent-output.txt

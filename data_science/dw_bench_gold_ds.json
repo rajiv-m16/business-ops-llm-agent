@@ -1,9 +1,0 @@
-{
-  "datasets": [
-    {
-      "type": "bigquery",
-      "name": "dw_bench_gold_ds",
-      "description": "This dataset contains Bristlecone bench data. Use this for analyzing resource availability and bench metrics."
-    }
-  ]
-}

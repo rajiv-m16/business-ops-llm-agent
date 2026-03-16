@@ -34,10 +34,10 @@ logger = logging.getLogger(__name__)
 
 ADK_BUILTIN_BQ_EXECUTE_SQL_TOOL = "execute_sql"
 
-def setup_before_agent_call(callback_context: CallbackContext) -> None:
-    """Setup the agent."""
-    if "sales_database_settings" not in callback_context.state:
-        callback_context.state["sales_database_settings"] = tools.get_database_settings()
+# def setup_before_agent_call(callback_context: CallbackContext) -> None:
+#     """Setup the agent."""
+#     if "sales_database_settings" not in callback_context.state:
+#         callback_context.state["sales_database_settings"] = tools.get_database_settings()
 
 def store_results_in_context(
     tool: BaseTool,
@@ -58,13 +58,13 @@ bigquery_toolset = BigQueryToolset(
     tool_filter=bigquery_tool_filter, bigquery_tool_config=bigquery_tool_config
 )
 
-# Initialize the Sales Agent
+
 sales_agent = LlmAgent(
-    model=os.getenv("BIGQUERY_AGENT_MODEL", "gemini-2.5-flash"),
+    model=os.getenv("SALES_AGENT_MODEL", "gemini-2.5-pro"),
     name="sales_agent",
     instruction=return_instructions_sales(),
-    tools=[tools.sales_nl2sql, bigquery_toolset], # Use bigquery_toolset instead of undefined tool
-    before_agent_callback=setup_before_agent_call,
+    tools=[tools.sales_nl2sql, bigquery_toolset], 
+    # before_agent_callback=setup_before_agent_call,
     after_tool_callback=store_results_in_context,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
 )

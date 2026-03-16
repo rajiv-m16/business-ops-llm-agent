@@ -13,15 +13,19 @@
 # limitations under the License.
 
 import json
+import logging
 import os
 
 from vertexai.preview.extensions import Extension
 
 USER_AGENT = "adk-samples-data-science-agent"
 
+logger = logging.getLogger(__name__)
+
 
 def list_all_extensions():
-    extensions = Extension.list(location="us-central1")
+    location = get_env_var("GOOGLE_CLOUD_LOCATION")
+    extensions = Extension.list(location=location)
     for extension in extensions:
         print("Name:", extension.gca_resource.name)
         print("Display Name:", extension.gca_resource.display_name)
@@ -63,10 +67,10 @@ def get_image_bytes(filepath):
             image_bytes = f.read()
         return image_bytes
     except FileNotFoundError:
-        print(f"Error: File not found at {filepath}")
+        logger.error("Error: File not found at %s", filepath)
         return None
     except Exception as e:
-        print(f"Error reading file: {e}")
+        logger.error("Error reading file: %s", e)
         return None
 
 
@@ -90,7 +94,7 @@ def extract_json_from_model_output(model_output):
         return json_object
     except json.JSONDecodeError as e:
         msg = f"Error decoding JSON: {e}"
-        print(msg)
+        logger.error(msg)
         return {"error": msg}
 
 

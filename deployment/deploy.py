@@ -39,7 +39,7 @@ flags.DEFINE_bool("create", False, "Create a new agent.")
 flags.DEFINE_bool("delete", False, "Delete an existing agent.")
 flags.mark_bool_flags_as_mutual_exclusive(["create", "delete"])
 
-AGENT_WHL_FILE = "data_science-0.1.0-py3-none-any.whl"
+AGENT_WHL_FILE = "custom_agent-0.1.0-py3-none-any.whl"
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -190,11 +190,10 @@ def main(argv: list[str]) -> None:  # pylint: disable=unused-argument
     # Collect environment variables, filtering out None values and empty strings
     env_var_keys = [
         "ROOT_AGENT_MODEL",
-        "ANALYTICS_AGENT_MODEL",
-        "BASELINE_NL2SQL_MODEL",
         "BIGQUERY_AGENT_MODEL",
-        "BQML_AGENT_MODEL",
-        "CHASE_NL2SQL_MODEL",
+        "SALES_AGENT_MODEL",
+        "HR_AGENT_MODEL",
+        "SLACK_WEBHOOK_URL",
         "BQ_DATASET_ID",
         "BQ_DATA_PROJECT_ID",
         "BQ_COMPUTE_PROJECT_ID",

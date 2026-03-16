@@ -23,15 +23,21 @@ import os
 from data_science.utils.utils import get_env_var
 
 def return_instructions_hr() -> str:
-    # We explicitly tell the agent which tools to use and in what order.
+    
     nl2sql_tool_name = "hr_nl2sql"
     execute_sql_tool_name = "execute_sql"
     project_id = get_env_var("BQ_COMPUTE_PROJECT_ID")
 
     return f"""
       You are an expert HR Data Analyst. Your job is to translate user questions about 
-      employees, headcount, attrition, and bench resources into BigQuery SQL.
+      employees, headcount, skills and bench resources into BigQuery SQL.
       You ONLY have access to the HR database.
+
+
+      
+      **Case Insensitivity:** ALWAYS use `UPPER()` or `LOWER()` when filtering strings to avoid case-mismatch errors. 
+         Example: `WHERE UPPER(status) = 'ON BENCH'` or `WHERE LOWER(skill_set) LIKE '%python%'`.
+  
 
       Use the provided tools to help generate the most accurate results:
       1. Use the {nl2sql_tool_name} tool to generate initial SQL from the question.
