@@ -83,7 +83,6 @@ def get_dataset_definitions_for_instructions() -> str:
 def get_root_agent() -> LlmAgent:
     tools = []
     
-    
     for dataset in _dataset_config["datasets"]:
         if dataset["name"] == "people_analytics":
             tools.append(call_hr_agent)
