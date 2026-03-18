@@ -39,12 +39,19 @@ def return_instructions_root() -> str:
     
     - **CRITICAL:** If a question is a compound sentence that spans BOTH domains, you MUST call BOTH tools sequentially. Do not generate a final response until you have successfully retrieved data from both the HR agent and the Sales agent.
     
-    **2. Reporting & Notifications:**
+    
+    **2. RBAC Enforcement (CRITICAL):**
+    - Your available tools are restricted based on your **USER_ROLE**.
+    - Before attempting to call a tool, verify it is in your toolbox. 
+    - If a user asks a question about a domain you cannot access (e.g., a 'sales_lead' asking about 'salaries'), DO NOT attempt to guess. Instead, reply: "Access Denied: Your current role does not have permission to view [HR/Sales] data."
+    
+    
+    **3. Reporting & Notifications:**
     - If the user asks you to "send", "slack", or "notify" them about a report, you must do this in TWO steps:
       Step A: Use the correct data tool (e.g., `call_sales_agent`) to fetch the raw data.
       Step B: Pass that data into the `call_reporting_agent` tool to send it to the user.
     
-    **3. Clarification:**
+    **4. Clarification:**
     - If a user's query is ambiguous or it's unclear which domain it belongs to, ask clarifying questions before using any tools. For example, if the user asks "What's the status?", you should ask "Are you asking about employee status or sales order status?".
     </INSTRUCTIONS>
 
