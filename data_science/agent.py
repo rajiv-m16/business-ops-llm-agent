@@ -74,9 +74,7 @@ def get_root_agent(user_role: str = "viewer") -> LlmAgent:
 # Load config
 _dataset_config = load_dataset_config()
 
-# Get the role from the environment, defaulting to 'admin' for local safety.
-# This allows us to change roles without changing code.
-active_role = os.getenv("ACTIVE_USER_ROLE", "admin")
+active_role = os.getenv("ACTIVE_USER_ROLE", "viewer")
 
 # Initialize the agent with the dynamic role
 root_agent = get_root_agent(user_role=active_role)

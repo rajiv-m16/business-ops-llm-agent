@@ -1,10 +1,6 @@
-Here is your polished and formatted `README.md` file. You can copy this directly into your project's `README.md` file.
+# Business Ops AI Agent: Multi-Agent Data Orchestrator
 
----
-
-# Custom-Agent: Multi-Agent Data Orchestrator
-
-`custom-agent` is a modular, multi-agent system powered by LLMs, designed to bridge the gap between natural language queries and structured data operations. It orchestrates specialized sub-agents to perform NL2SQL tasks, data synthesis, and Slack reporting within a Google Cloud Platform environment.
+`businessOps_agent` is a modular, multi-agent system powered by LLMs, designed to bridge the gap between natural language queries and structured data operations. It orchestrates specialized sub-agents to perform NL2SQL tasks, data synthesis, and Slack reporting within a Google Cloud Platform environment.
 
 ## 🚀 Key Features
 
@@ -32,6 +28,14 @@ custom-agent/
 └── pyproject.toml          # Project dependencies and build config
 ```
 
+## Architecture
+
+![Architecture Diagram](./assets/business%20agent%20architecture%20diagram.png)
+
+## Flow Chart
+
+![Flow Diagram](./assets/flow%20chart%20business%20agent.png)
+
 ## 🛠️ Prerequisites
 
 - **Python 3.12+**
@@ -46,9 +50,11 @@ custom-agent/
 Clone the repository and use `uv` to synchronize the environment:
 
 ```bash
-git clone https://github.com/your-username/custom-agent.git
-cd custom-agent
+git clone <repository-url>
+cd BusinessOpsAIAgent
 uv sync
+.venv\Scripts\activate
+
 ```
 
 ### 2. Configuration
