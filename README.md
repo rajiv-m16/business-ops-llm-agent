@@ -53,7 +53,7 @@ Clone the repository and use `uv` to synchronize the environment:
 git clone <repository-url>
 cd BusinessOpsAIAgent
 uv sync
-.venv\Scripts\activate
+source .venv\Scripts\activate
 
 ```
 
